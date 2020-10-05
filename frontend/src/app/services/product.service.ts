@@ -1,4 +1,3 @@
-import { ProductModelServer } from './../models/product.model';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -23,5 +22,9 @@ export class ProductService {
 
   getSingleProduct(id: number): Observable<ProductModelServer>{
     return this.http.get<ProductModelServer>(this.SERVER_URL + '/products'+id);
+  }
+
+  getProductFromCategory(catName: String): Observable<ProductModelServer[]>{
+    return this.http.get<ProductModelServer[]>(this.SERVER_URL + 'products/category/'+catName)
   }
 }

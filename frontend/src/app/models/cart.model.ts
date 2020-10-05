@@ -9,7 +9,7 @@ export interface CartModelServer {
 
 export interface CartModulePublic {
     total: number;
-    productData: [{
+    prodData: [{
         id:number,
         incart: number
     }]
