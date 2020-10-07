@@ -7,10 +7,10 @@ export interface CartModelServer {
     }]
 }
 
-export interface CartModulePublic {
+export interface CartModelPublic {
     total: number;
     prodData: [{
-        id:number,
         incart: number
+        id:number,
     }]
 }
