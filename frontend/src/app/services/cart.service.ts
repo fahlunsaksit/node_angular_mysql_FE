@@ -36,7 +36,7 @@ export class CartService {
   cartTotal$ = new BehaviorSubject<number>(0);
   // Data variable to store the cart information on the client's local storage
 
-  cartDataObs$ = new BehaviorSubject<CartModelServer>(this.cartDataServer);
+  cartData$ = new BehaviorSubject<CartModelServer>(this.cartDataServer);
 
   constructor(
     private productService: ProductService,
@@ -47,7 +47,7 @@ export class CartService {
     private toast: ToastrService
   ) {
     this.cartTotal$.next(this.cartDataServer.total);
-    this.cartDataObs$.next(this.cartDataServer);
+    this.cartData$.next(this.cartDataServer);
 
     let info: CartModelPublic = JSON.parse(localStorage.getItem('cart'));
 
@@ -74,7 +74,7 @@ export class CartService {
               this.cartDataClient.total = this.cartDataServer.total;
               localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
             }
-            this.cartDataObs$.next({ ...this.cartDataServer });
+            this.cartData$.next({ ...this.cartDataServer });
           });
       });
     }
@@ -102,7 +102,7 @@ export class CartService {
         this.cartDataClient.prodData[0].id = prod.id;
         this.cartDataClient.total = this.cartDataServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
         this.toast.success(`${prod.name} added to the cart.`, 'Product Added', {
           timeOut: 1500,
           progressBar: true,
@@ -169,7 +169,7 @@ export class CartService {
         this.CalculateTotal();
         this.cartDataClient.total = this.cartDataServer.total;
         localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
       } // END of ELSE
     });
   }
@@ -184,7 +184,7 @@ export class CartService {
       this.cartDataClient.prodData[index].incart = data.numInCart;
       this.CalculateTotal();
       this.cartDataClient.total = this.cartDataServer.total;
-      this.cartDataObs$.next({ ...this.cartDataServer });
+      this.cartData$.next({ ...this.cartDataServer });
       localStorage.setItem('cart', JSON.stringify(this.cartDataClient));
     } else {
       // @ts-ignore
@@ -193,10 +193,10 @@ export class CartService {
       // @ts-ignore
       if (data.numInCart < 1) {
         this.DeleteProductFromCart(index);
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
       } else {
         // @ts-ignore
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
         this.cartDataClient.prodData[index].incart = data.numInCart;
         this.CalculateTotal();
         this.cartDataClient.total = this.cartDataServer.total;
@@ -232,9 +232,9 @@ export class CartService {
           ],
           total: 0,
         };
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
       } else {
-        this.cartDataObs$.next({ ...this.cartDataServer });
+        this.cartData$.next({ ...this.cartDataServer });
       }
     }
     // If the user doesn't want to delete the product, hits the CANCEL button
@@ -320,7 +320,7 @@ export class CartService {
       ],
       total: 0,
     };
-    this.cartDataObs$.next({ ...this.cartDataServer });
+    this.cartData$.next({ ...this.cartDataServer });
   }
 }
 
