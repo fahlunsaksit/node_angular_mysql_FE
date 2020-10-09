@@ -178,9 +178,7 @@ export class CartService {
     let data = this.cartDataServer.data[index];
     if (increase) {
       // @ts-ignore
-      data.numInCart < data.product.quantity
-        ? data.numInCart++
-        : data.product.quantity;
+      data.numInCart < data.product.quantity? data.numInCart++: data.product.quantity;
       this.cartDataClient.prodData[index].incart = data.numInCart;
       this.CalculateTotal();
       this.cartDataClient.total = this.cartDataServer.total;
